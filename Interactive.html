@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive Navigation with Theme</title>
+  <style>
+    /* Reset & Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      transition: background-color 0.4s, color 0.4s;
+      line-height: 1.6;
+    }
+
+    /* Global Background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      z-index: -2;
+    }
+
+    /* Theme Colors */
+    body.light {
+      --section-bg: rgba(255, 255, 255, 0.85);
+      --section-text: #111;
+      --nav-bg: rgba(255, 255, 255, 0.9);
+    }
+
+    body:not(.light) {
+      --section-bg: rgba(34, 34, 34, 0.85);
+      --section-text: #eee;
+      --nav-bg: rgba(30, 30, 30, 0.9);
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: var(--nav-bg);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: center;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-container {
+      display: flex;
+      width: 100%;
+      max-width: 1200px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      margin-right: 20px;
+    }
+
+    .tooltip a {
+      text-decoration: none;
+      color: var(--section-text);
+      padding: 8px 12px;
+      transition: background-color 0.3s, color 0.3s;
+      border-radius: 4px;
+    }
+
+    .tooltip a:hover {
+      background-color: var(--section-text);
+      color: var(--section-bg);
+    }
+
+    .tooltip-text {
+      visibility: hidden;
+      opacity: 0;
+      background-color: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 4px;
+      position: absolute;
+      bottom: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 13px;
+      white-space: nowrap;
+      transition: opacity 0.3s;
+      z-index: 1001;
+    }
+
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .nav-right {
+      margin-left: auto;
+    }
+
+    .theme-toggle {
+      padding: 6px 10px;
+      background: transparent;
+      color: var(--section-text);
+      border: 1px solid var(--section-text);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .theme-toggle:hover {
+      background-color: var(--section-text);
+      color: var(--section-bg);
+    }
+
+    /* Sections */
+    .section {
+      padding: 120px 40px;
+      min-height: 100vh;
+      background-color: var(--section-bg);
+      color: var(--section-text);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* About Section with Background Image */
+    
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    p, ul li {
+      font-size: 1.1rem;
+      max-width: 800px;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body class="light">
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div>
+        <div class="tooltip">
+          <a href="#home">Home</a>
+          <span class="tooltip-text">Go to the homepage</span>
+        </div>
+        <div class="tooltip">
+          <a href="#about">About</a>
+          <span class="tooltip-text">Learn more about us</span>
+        </div>
+        <div class="tooltip">
+          <a href="#services">Services</a>
+          <span class="tooltip-text">View our offerings</span>
+        </div>
+        <div class="tooltip">
+          <a href="#contact">Contact</a>
+          <span class="tooltip-text">Get in touch with us</span>
+        </div>
+      </div>
+      <div class="nav-right">
+        <button class="theme-toggle" id="themeToggle" title="Toggle Theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sections -->
+  <section id="home" class="section">
+    <h1>Welcome to Our Website</h1>
+    <p>
+      Discover a world of innovation and creativity. We bring your ideas to life with technology and design that inspires.
+      Our platform offers seamless experiences and smart solutions tailored just for you.
+    </p>
+  </section>
+
+  <section id="about" class="section">
+    <h1>About Us</h1>
+    <p>
+      We are a passionate team of developers, designers, and strategists dedicated to building intuitive web experiences.
+      Our mission is to empower businesses and individuals by turning their visions into impactful digital realities.
+    </p>
+    <p>
+      Since our inception, we've helped dozens of clients reach new heights through cutting-edge technology, transparent communication,
+      and a commitment to excellence.
+    </p>
+  </section>
+
+  <section id="services" class="section">
+    <h1>Our Services</h1>
+    <p>
+      We offer a wide range of services to help you succeed in the digital world:
+    </p>
+    <ul>
+      <li>🔧 Web & Mobile App Development</li>
+      <li>🎨 UI/UX Design</li>
+      <li>☁️ Cloud Solutions & DevOps</li>
+      <li>📈 Digital Marketing & SEO</li>
+      <li>🧠 AI-Powered Products & Analytics</li>
+    </ul>
+  </section>
+
+  <section id="contact" class="section">
+    <h1>Contact Us</h1>
+    <p>
+      Have questions or need a custom solution? We're just a message away!
+      Reach out to our team and let’s create something amazing together.
+    </p>
+    <p>
+      📧 Email: support@example.com<br />
+      📞 Phone: +1 (123) 456-7890<br />
+      📍 Address: 123 Innovation Way, Tech City
+    </p>
+  </section>
+
+  <!-- Scroll & Theme Toggle JS -->
+  <script>
+    const navbar = document.getElementById("navbar");
+    const themeToggle = document.getElementById("themeToggle");
+    const body = document.body;
+
+    window.addEventListener("scroll", () => {
+      navbar.classList.toggle("scrolled", window.scrollY > 50);
+    });
+
+    themeToggle.addEventListener("click", () => {
+      body.classList.toggle("light");
+      themeToggle.textContent = body.classList.contains("light") ? "🌙" : "☀️";
+    });
+  </script>
+</body>
+</html>
